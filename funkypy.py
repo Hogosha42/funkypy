@@ -57,8 +57,8 @@ class Data:
 #======================================================#
 
 
-def _bindfun(fun):
-    return lambda x: fun(x) if x != None else x
+def _bindfun(function: FunctionType):
+    return lambda x: function(x) if x != None else x
 
 
 class Binded():
