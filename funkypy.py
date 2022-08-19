@@ -1,30 +1,36 @@
 # funkypy.py
 
 from functools import reduce
+from types import FunctionType, LambdaType
 
-__all__ = ["lmap", "mapi", "mapcur", "lsfilter", "funcomp", "Data", "Binded"]
+__all__ = ['lmap', 'mapi', 'mapcur', 'lsfilter', 'funcomp', 'Data', 'Binded']
 
 
 
-def funcomp(*funcs):
-    return reduce(lambda f,g:lambda x: f(g(x)), funcs[::-1])
+def funcomp(*functions) -> LambdaType:
+    """Compose a function out of all the arguments given in order."""
+    return reduce(lambda f,g:lambda x: f(g(x)), functions[::-1])
 
 
 #========================================================#
 # functional ways to convert or apply functions to lists #
 #========================================================#
 
-def lmap(fun, ls):
-    return list(map(fun, ls))
+def lmap(function: FunctionType, ls: list) -> list:
+    """Builds a new list whose elements are the results of applying the given function to each of the elements of the list"""
+    return list(map(function, ls))
 
-def mapcur(fun):
-	return lambda x: list(map(fun, x))
+def mapcur(function: FunctionType) -> LambdaType:
+    """curried version of lmap, good for uses in pipelines"""
+    return lambda x: list(map(function, x))
 
-def mapi(fun, ls):
-	return list(map(fun, range(len(ls)),ls))
+def mapi(function: FunctionType, ls: list) -> list:
+    """Builds a new list whose elements are the results of applying the given function to each of the elements of the list. The function must have two input arguments for the element and the index."""
+    return list(map(function, range(len(ls)),ls))
 
-def lsfilter(conditional, ls):
-	return [x for x in ls if conditional(x)]
+def lsfilter(conditional: FunctionType, ls: list) -> list:
+    """Returns a new list containing only the elements of the list for which the given conditional returns 'True'"""
+    return [x for x in ls if conditional(x)]
 
 
 
@@ -43,7 +49,7 @@ class Data:
     def __repr__(self):
         return str(self.data)
 
-    def value(self):
+    def val(self):
         return self.data
 
 #======================================================#
