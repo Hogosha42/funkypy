@@ -1,3 +1,5 @@
+# funkypy.py
+
 from functools import reduce
 
 __all__ = ["lmap", "mapi", "mapcur", "lsfilter", "funcomp", "Data", "Binded"]
