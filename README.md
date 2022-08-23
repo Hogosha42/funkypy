@@ -1,4 +1,4 @@
-# FunkyPy - Python
+# FunkyPy - Enjoy FP in Python
 
 A python module that allows for easier functional programming in python
 
@@ -21,7 +21,7 @@ without this module it would look like the example below
 print(times2(add4(add2(4))))
 # 20
 ```
-with the package we can make it look like this:
+with the module we can make it look like this:
 ```py
 Data(4) >> add2 >> add4 >> times2 >> print
 # 20
@@ -35,10 +35,46 @@ Data(4) >> add2 >> add4 >> times2 >> print
 >> print)
 # 20
 ```
+## Composing
+
+With this module we can also greatly reduce the effort of composing functions in python, there are 3 ways of composing functions with this module. You can choose which one you find most preferable.
+
+### funcomp function
+
+The first method uses the `funcomp` function and will compose your functions in the order you give them.
+
+```py
+add8 = funcomp(add2, add4, add2)
+
+Data(4) >> add8 >> print
+# 12
+```
+
+### Compose Class
+
+The second method will make use of the Compose class, first you have to initiate the class with the function you would want to compose and then you can keep composing using the `>>` operator.
+
+```py
+add8 = Compose(add2) >> add4 >> add2
+
+Data(4) >> add8 >> print
+# 12
+```
+
+### Flow Keyword
+
+The third and final method in this module will use the Flow keyword to compose functions. this will also make use of the `>>` operator. 
+
+```py
+add8 = Flow >> add2 >> add4 >> add2
+
+Data(4) >> add8 >> print
+# 12
+```
 
 ## Bind
 
-This package has implemented bind very similar to how you would use it in f#, here is an example of how you would use it in this module.
+This module has implemented bind very similar to how you would use it in f#, here is an example of how you would use it in this module.
 
 ```py
 (Data(4) 
@@ -55,7 +91,7 @@ This package has implemented bind very similar to how you would use it in f#, he
 ```
 add2 and add4 both have no ways of dealing with `None`, however you can still pass it along the pipeline because of the bind. 
 
-The way you would indicate if a function can use bind is with a decorator, example below.
+The way you would indicate if a function can use bind is with the `@Binded` decorator, example below.
 ```py
 @Binded
 def add2(x):
