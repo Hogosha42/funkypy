@@ -52,7 +52,7 @@ Data(4) >> add8 >> print
 
 ### Compose Class
 
-The second method will make use of the `Flow` class, first you have to initiate the class with the function you would want to compose and then you can keep composing using the `>>` operator.
+The second method will make use of the `Compose` class, first you have to initiate the class with the function you would want to compose and then you can keep composing using the `>>` operator.
 
 ```py
 add8 = Compose(add2) >> add4 >> add2
