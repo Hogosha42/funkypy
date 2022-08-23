@@ -3,7 +3,7 @@
 from functools import reduce
 from types import FunctionType, LambdaType
 
-__all__ = ['lmap', 'mapi', 'mapcur', 'lsfilter', 'funcomp', 'Data', 'Binded']
+__all__ = ['lmap', 'mapi', 'mapcur', 'lsfilter', 'funcomp', 'Data', 'Binded', 'Compose']
 
 
 
@@ -52,6 +52,27 @@ class Data:
     def val(self):
         return self.data
 
+
+#======================================================#
+#     Compose class - to easily compose functions      #
+#======================================================#
+
+class Compose:
+    """Class to easily compose functions"""
+
+    def __init__(self, func) -> None:
+        self.func = func
+
+    def __rshift__(self, other):
+        return Compose(lambda x: other(self.func(x)))
+
+    def __call__(self, *args, **kwargs):
+        return self.func(*args, **kwargs)
+
+@Compose
+def Flow(x):
+    return x
+
 #======================================================#
 #  Bind - to bind functions and easily deal with None  #
 #======================================================#
@@ -62,6 +83,8 @@ def _bindfun(function: FunctionType):
 
 
 class Binded():
+    """Class used as decorator to bind functions."""
+
     def __init__(self, func):
         self.func = func
 
@@ -90,3 +113,10 @@ if __name__ == "__main__":
     >> add2.bind()
     >> add4.bind()
     >> print)
+
+    add12 = Compose(add4) >> add4 >> add4
+    add8 = Flow >> add2 >> add4 >> add2
+    
+
+    Data(4) >> add8 >> add12 >> print
+    # 24
